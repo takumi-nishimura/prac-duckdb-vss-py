@@ -193,7 +193,8 @@ def main():
     LIMIT 3
     """
     result = con.sql(sql_query)
-    print(result)
+    result_df = result.to_df()[["asctime", "content", "score"]]
+    print(result_df)
 
     con.close()
     print("Database connection closed.")

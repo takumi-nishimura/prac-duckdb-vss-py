@@ -189,12 +189,12 @@ def main():
     query_embedding = embedding.encode_query(chat_theme)
     sql_query = f"""
     SELECT *,
-    array_cosine_similarity(embedding, {query_embedding}::FLOAT[{EMBEDDING_DIM}]) AS score
+    array_cosine_similarity(embedding, ?::FLOAT[{EMBEDDING_DIM}]) AS score
     FROM {TABLE_NAME}
     ORDER BY score DESC
     LIMIT 3
     """
-    result = con.sql(sql_query)
+    result = con.sql(sql_query, params=[query_embedding])
     result_df = result.to_df()[["asctime", "content", "score"]]
     print(result_df)
 

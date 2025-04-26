@@ -123,6 +123,8 @@ def main():
 
     db_path = f"data/{DB_NAME}"
     con = duckdb.connect(db_path)
+    con.install_extension("vss")
+    con.load_extension("vss")
 
     if not table_exists(con, TABLE_NAME):
         print(f"Creating table {TABLE_NAME}...")
